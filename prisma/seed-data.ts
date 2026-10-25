@@ -2,6 +2,17 @@
 
 export const COLLECTIONS = [
   {
+    slug: "the-bhadohi-collection",
+    name: "The Bhadohi Collection",
+    tagline: "Our first carpets, hand-tufted in the carpet capital of India.",
+    description:
+      "Bhadohi, on the banks of the Ganga, has made carpets for centuries. This collection gathers our first pieces from its workshops, from a sculptural free-form statement to a quiet heritage medallion. Each is hand-tufted in New Zealand wool and made to order.",
+    image: "/catalogue/agni-top-down.webp",
+    seoTitle: "The Bhadohi Collection | Hand-Tufted Wool Carpets Made in India",
+    seoDescription: "Hand-tufted New Zealand wool carpets, made to order in Bhadohi, India. Shipped to the US, UK and Europe.",
+    sortOrder: 0,
+  },
+  {
     slug: "the-earth-collection",
     name: "The Earth Collection",
     tagline: "Natural tones, organic textures, understated elegance.",

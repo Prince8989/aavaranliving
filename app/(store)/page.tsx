@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ButtonLink } from "@/components/ui/Button";
 import { Motif } from "@/components/ui/Motif";
@@ -7,6 +8,7 @@ import { ProductGrid } from "@/components/product/ProductCard";
 import { NewsletterForm } from "@/components/forms/NewsletterForm";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { getCollections, getFeaturedProducts } from "@/lib/catalog";
+import { countWord } from "@/lib/format-words";
 import { getContent } from "@/lib/content";
 import { db } from "@/lib/db";
 import { getCurrency } from "@/lib/preferences";
@@ -96,14 +98,18 @@ export default async function HomePage() {
       <section className="bg-sandstone/50 py-28 lg:py-36">
         <div className="container-site">
           <Reveal>
-            <SectionHeading eyebrow="The Collections" title="Four expressions of belonging" />
+            <SectionHeading eyebrow="The Collections" title={`${countWord(collections.length)} expressions of belonging`} />
           </Reveal>
-          <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className={`mt-16 grid gap-6 sm:grid-cols-2 ${collections.length === 5 ? "lg:grid-cols-5" : "lg:grid-cols-4"}`}>
             {collections.map((c, i) => (
               <Reveal key={c.id} delay={i * 100}>
                 <Link href={`/collections/${c.slug}`} className="group block">
                   <div className="relative aspect-[3/4] overflow-hidden">
-                    <Motif className="h-full w-full transition-transform duration-[1.4s] ease-luxe group-hover:scale-105" tone={i % 2 ? "walnut" : "dark"} seed={i + 3} showLabel={false} label={c.name} />
+                    {c.image ? (
+                      <Image src={c.image} alt="" fill sizes="(min-width: 1024px) 20vw, (min-width: 640px) 50vw, 100vw" className="object-cover transition-transform duration-[1.4s] ease-luxe group-hover:scale-105" />
+                    ) : (
+                      <Motif className="h-full w-full transition-transform duration-[1.4s] ease-luxe group-hover:scale-105" tone={i % 2 ? "walnut" : "dark"} seed={i + 3} showLabel={false} label={c.name} />
+                    )}
                     <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-obsidian/90 to-transparent p-6 pt-20 text-ivory">
                       <h3 className="font-serif text-2xl">{c.name}</h3>
                       <p className="mt-2 text-sm text-sandstone/90">{c.tagline}</p>
