@@ -1,32 +1,39 @@
-import type { Metadata } from "next";
-import { Cormorant_Garamond, Inter } from "next/font/google";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { CartProvider } from "@/components/CartProvider";
-import { Header } from "@/components/Header";
-import { getCurrency } from "@/lib/server-currency";
-
-const serif = Cormorant_Garamond({ subsets: ["latin"], weight: ["400", "600"], variable: "--font-serif" });
-const sans = Inter({ subsets: ["latin"], variable: "--font-sans" });
+import { sans, serif } from "./fonts";
+import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: { default: "Aavaran Living — Handcrafted Rugs", template: "%s | Aavaran Living" },
-  description: "Hand-knotted and handwoven rugs, crafted by artisans in India and shipped to the US and Europe.",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://aavaranliving.com"),
+  metadataBase: new URL(site.url),
+  title: { default: "AAVARAN — The Art of Belonging", template: "%s | AAVARAN" },
+  description:
+    "Premium Indian heritage carpets with contemporary international appeal. AAVARAN — A House of MATRIKAVA GLOBAL. Rooted in India. Crafted for the World.",
+  applicationName: "AAVARAN",
+  openGraph: {
+    type: "website",
+    siteName: "AAVARAN",
+    locale: "en_GB",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "AAVARAN — The Art of Belonging" }],
+  },
+  twitter: { card: "summary_large_image" },
+  alternates: { canonical: "/" },
+  robots: { index: true, follow: true },
 };
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const currency = await getCurrency();
+export const viewport: Viewport = {
+  themeColor: "#241C18",
+  width: "device-width",
+  initialScale: 1,
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${serif.variable} ${sans.variable}`}>
-      <body>
-        <CartProvider currency={currency}>
-          <Header />
-          <main className="mx-auto min-h-[70vh] max-w-6xl px-4 py-10">{children}</main>
-          <footer className="border-t border-stone/20 py-8 text-center text-sm text-stone">
-            © {new Date().getFullYear()} Aavaran Living. Handcrafted in India. Shipping to the US &amp; Europe.
-          </footer>
-        </CartProvider>
-      </body>
+    <html lang="en" className={`${serif.variable} ${sans.variable}`} suppressHydrationWarning>
+      <head>
+        {/* Enables reveal animations only when JS runs; content stays visible otherwise. */}
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+      </head>
+      <body>{children}</body>
     </html>
   );
 }
