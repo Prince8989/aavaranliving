@@ -59,6 +59,31 @@ export default async function CraftPage() {
           </Reveal>
         ))}
       </section>
+      <section className="container-site grid items-center gap-10 pb-28 lg:grid-cols-[1fr_1.15fr] lg:gap-20" aria-labelledby="craft-film">
+        <div>
+          <p className="label text-walnut">In the workshop</p>
+          <h2 id="craft-film" className="mt-3 font-serif text-4xl">Some creations take time to become timeless</h2>
+          <p className="mt-6 max-w-md leading-relaxed text-muted">
+            The design is drawn onto cloth, tufted by hand, sealed and backed, then trimmed and finished. Here is the Agni carpet on its way from frame to floor.
+          </p>
+          <div className="mt-8">
+            <ButtonLink href="/products/agni-hand-tufted-wool-carpet" variant="ghost">
+              View the Agni carpet →
+            </ButtonLink>
+          </div>
+        </div>
+        <video
+          className="mx-auto aspect-[9/16] w-full max-w-sm bg-obsidian object-cover"
+          src="/media/making-of-agni.mp4"
+          poster="/media/making-of-agni-poster.jpg"
+          controls
+          muted
+          loop
+          playsInline
+          preload="none"
+          aria-label="Film: the Agni carpet being hand-tufted and finished"
+        />
+      </section>
       <section className="on-dark bg-obsidian py-20 text-center text-ivory">
         <p className="font-serif text-3xl">Learn more in the Journal</p>
         <div className="mt-8">

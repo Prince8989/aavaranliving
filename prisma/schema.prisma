@@ -203,6 +203,9 @@ model Product {
   pattern          String?
   pileHeightMm     Int?
   careInstructions String?
+  // Optional short film (e.g. the making of the carpet), served from /public or blob storage
+  videoUrl         String?
+  videoPoster      String?
   status           ProductStatus @default(DRAFT)
   // Development sample — never shown when NODE_ENV=production unless ALLOW_SAMPLE_PRODUCTS=true
   isSample         Boolean       @default(false)

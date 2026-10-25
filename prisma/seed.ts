@@ -7,6 +7,7 @@
  */
 import { db } from "../lib/db";
 import { ARTICLES, COLLECTIONS, SAMPLE_PRODUCTS, SAMPLE_SHIPPING } from "./seed-data";
+import { CATALOGUE } from "./catalogue";
 
 const withSamples = process.env.SEED_SAMPLES === "true";
 
@@ -83,6 +84,54 @@ async function main() {
         update: {},
       });
     }
+  }
+
+  // Real catalogue: create-only, so admin edits (prices, stock, copy) are never overwritten by a redeploy.
+  for (const p of CATALOGUE) {
+    if (await db.product.findUnique({ where: { slug: p.slug } })) continue;
+    const collection = await db.collection.findUniqueOrThrow({ where: { slug: p.collection } });
+    await db.product.create({
+      data: {
+        slug: p.slug,
+        sku: p.sku,
+        name: p.name,
+        description: p.description,
+        material: p.material,
+        construction: p.construction,
+        countryOfOrigin: "India",
+        colour: p.colour,
+        pattern: p.pattern,
+        careInstructions: p.careInstructions,
+        videoUrl: p.videoUrl,
+        videoPoster: p.videoPoster,
+        status: "PUBLISHED",
+        featured: p.featured,
+        featuredRank: p.featuredRank,
+        seoTitle: p.seoTitle,
+        seoDescription: p.seoDescription,
+        publishedAt: new Date(),
+        collections: { create: { collectionId: collection.id } },
+        images: { create: p.images.map((img, i) => ({ ...img, width: 1500, height: 2000, sortOrder: i })) },
+        variants: {
+          create: p.variants.map((v, i) => ({
+            sku: `${p.sku}-${v.label.replace(/\D+/g, "")}`,
+            label: v.label,
+            widthCm: v.w,
+            lengthCm: v.l,
+            stock: v.stock,
+            sortOrder: i,
+            prices: {
+              create: [
+                { currency: "USD" as const, amount: v.usd },
+                { currency: "GBP" as const, amount: v.gbp },
+                { currency: "EUR" as const, amount: v.eur },
+              ],
+            },
+          })),
+        },
+      },
+    });
+    console.log(`Catalogue: created ${p.name}`);
   }
 
   console.log(`Seed complete${withSamples ? " (with development samples)" : ""}.`);

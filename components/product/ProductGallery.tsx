@@ -20,7 +20,7 @@ export function ProductGallery({ images, name }: { images: Img[]; name: string }
   const current = images[active];
 
   return (
-    <div className="flex flex-col-reverse gap-4 lg:flex-row">
+    <div className="flex min-w-0 flex-col-reverse gap-4 lg:flex-row">
       {images.length > 1 && (
         <ul className="flex gap-3 overflow-x-auto lg:w-20 lg:flex-col" aria-label="Product images">
           {images.map((img, i) => (
