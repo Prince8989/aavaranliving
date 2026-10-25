@@ -2,7 +2,7 @@
   "name": "aavaran",
   "version": "0.1.0",
   "private": true,
-  "description": "AAVARAN — A House of MATRIKAVA GLOBAL. Premium Indian heritage carpets.",
+  "description": "AAVARAN \u2014 A House of MATRIKAVA GLOBAL. Premium Indian heritage carpets.",
   "scripts": {
     "dev": "next dev",
     "build": "prisma generate && next build",
@@ -17,7 +17,8 @@
     "db:deploy": "prisma migrate deploy",
     "db:seed": "tsx prisma/seed.ts",
     "admin:grant": "tsx scripts/grant-admin.ts",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "vercel-build": "prisma generate && prisma migrate deploy && tsx prisma/seed.ts && tsx scripts/grant-admin.ts --from-env && next build"
   },
   "dependencies": {
     "@auth/prisma-adapter": "2.11.3",

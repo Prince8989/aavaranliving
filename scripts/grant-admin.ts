@@ -5,11 +5,18 @@
  *   npm run admin:grant -- you@example.com
  *
  * The user then signs in at /login with a one-time email link and can open /admin.
+ *
+ * On Vercel, set INITIAL_ADMIN_EMAIL and the build runs this automatically (`--from-env`).
  */
 import { db } from "../lib/db";
 
 async function main() {
-  const email = process.argv[2]?.trim().toLowerCase();
+  const fromEnv = process.argv[2] === "--from-env";
+  const email = (fromEnv ? process.env.INITIAL_ADMIN_EMAIL : process.argv[2])?.trim().toLowerCase();
+  if (fromEnv && !email) {
+    console.log("INITIAL_ADMIN_EMAIL not set — skipping admin bootstrap.");
+    return;
+  }
   if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
     console.error("Usage: npm run admin:grant -- <email>");
     process.exit(1);

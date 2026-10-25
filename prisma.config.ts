@@ -1,6 +1,6 @@
 import { defineConfig } from "prisma/config";
 
-// DATABASE_URL is read from the environment (Vercel env vars, or .env.local loaded by your shell).
+// Migrations use a direct (non-pooled) connection when available; the app itself uses DATABASE_URL.
 export default defineConfig({
   schema: "prisma/schema.prisma",
   migrations: {
@@ -8,6 +8,6 @@ export default defineConfig({
     seed: "tsx prisma/seed.ts",
   },
   datasource: {
-    url: process.env.DATABASE_URL ?? "",
+    url: process.env.DATABASE_URL_UNPOOLED ?? process.env.DATABASE_POSTGRES_URL_NON_POOLING ?? process.env.DATABASE_URL ?? "",
   },
 });
