@@ -73,7 +73,7 @@ export default async function CraftPage() {
           </div>
         </div>
         <video
-          className="mx-auto aspect-[9/16] w-full max-w-sm bg-obsidian object-cover"
+          className="mx-auto block h-auto max-h-[80vh] w-auto max-w-full bg-obsidian"
           src="/media/making-of-agni.mp4"
           poster="/media/making-of-agni-poster.jpg"
           controls

@@ -183,11 +183,11 @@ export default async function ProductPage({ params }: Props) {
             <p className="label text-walnut">The making</p>
             <h2 id="film-heading" className="mt-3 font-serif text-4xl">From yarn to {product.name}</h2>
             <p className="mt-6 max-w-md leading-relaxed text-muted">
-              Every carpet is drawn, tufted, backed and finished by hand by our artisans in Bhadohi. A short film of this piece being made.
+              Every carpet is drawn, tufted, backed and finished by hand by our artisans in Bhadohi. A short film of this piece being made and finished.
             </p>
           </div>
           <video
-            className="mx-auto aspect-[9/16] w-full max-w-sm bg-obsidian object-cover"
+            className="mx-auto block h-auto max-h-[80vh] w-auto max-w-full bg-obsidian"
             src={product.videoUrl}
             poster={product.videoPoster ?? undefined}
             controls
