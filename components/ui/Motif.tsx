@@ -6,12 +6,14 @@ export function Motif({
   className = "",
   tone = "dark",
   label = "Photography forthcoming",
+  caption = "Photography forthcoming",
   showLabel = true,
   seed = 0,
 }: {
   className?: string;
   tone?: "dark" | "light" | "walnut";
-  label?: string;
+  label?: string; // accessible name
+  caption?: string; // short visible text
   showLabel?: boolean;
   seed?: number;
 }) {
@@ -39,10 +41,11 @@ export function Motif({
       <div className="absolute inset-6 border" style={{ borderColor: `${line}55` }} aria-hidden="true" />
       {showLabel && (
         <span
-          className="label absolute bottom-4 left-1/2 -translate-x-1/2 whitespace-nowrap"
+          aria-hidden="true"
+          className="label absolute inset-x-4 bottom-4 truncate text-center"
           style={{ color: tone === "light" ? "#704D38" : "#E7D7C1", opacity: 0.75 }}
         >
-          {label}
+          {caption}
         </span>
       )}
     </div>

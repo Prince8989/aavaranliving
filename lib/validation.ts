@@ -68,7 +68,13 @@ export const bespokeSchema = z.object({
   budget: z.enum(["", "under-2500", "2500-5000", "5000-10000", "10000-plus", "discuss"]).optional(),
   deliveryDate: trimmed(40).optional().or(z.literal("")),
   requirements: trimmed(5000).optional().or(z.literal("")),
-  referenceImageUrl: z.string().url().max(500).optional().or(z.literal("")),
+  referenceImageUrl: z
+    .string()
+    .url()
+    .max(500)
+    .refine((u) => u.startsWith("https://"), "Must be an https URL")
+    .optional()
+    .or(z.literal("")),
   ...antiSpam,
 });
 
